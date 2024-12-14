@@ -63,7 +63,7 @@ app.MapPost("/notes", async (
     return Results.BadRequest(res.Errors);
 });
 
-app.MapPost("/notes/{id}", async (
+app.MapGet("/notes/{id}", async (
     INotesService svr,
     [FromRoute] string id) =>
 {
@@ -77,7 +77,7 @@ app.MapPost("/notes/{id}", async (
     return Results.Ok(result.Data);
 });
 
-app.MapPost("/notes/all", async (
+app.MapGet("/notes/all", async (
     INotesService svr) =>
 {
     var result = await svr.GetAllNotesAsync();
@@ -97,5 +97,22 @@ app.MapDelete("/notes/{id}", async (
     await svr.DeleteNoteAsync(id);
     return Results.Ok();
 });
+
+app.MapPatch("/notes/{id}", async (
+    INotesService svr,
+    [FromRoute] string id,
+    [FromBody] UpdateNoteRequest request) =>
+    {
+        var res = await svr.UpdateNoteAsync(
+            id,
+            request.ToRequest(id));
+
+        if (res.Data is null)
+        {
+            return Results.NotFound();
+        }
+
+        return Results.Ok(res.Data);
+    });
 
 app.Run();

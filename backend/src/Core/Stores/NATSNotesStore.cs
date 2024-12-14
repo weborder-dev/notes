@@ -84,9 +84,19 @@ public class NATSNotesStore : INotesStore
         }
     }
 
-    public Task<Note> UpdateNoteAsync(Note note)
+    public async Task<Note?> UpdateNoteAsync(Note note)
     {
-        throw new NotImplementedException();
+        try
+        {
+            var kv = await GetOrCreateStoreAsync();
+            await kv.PutAsync(note.Id, note);
+
+            return note;
+        }
+        catch
+        {
+            return null;
+        }
     }
 
     #endregion

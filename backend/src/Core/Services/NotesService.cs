@@ -68,9 +68,21 @@ public class NotesService : INotesService
             : ServiceResult<Note>.Failure("not found");
     }
 
-    public Task<ServiceResult<Note>> UpdateNoteAsync(Note note)
+    public async Task<ServiceResult<Note>> UpdateNoteAsync(string id, Note note)
     {
-        throw new NotImplementedException();
+        var storedNote = await _store.GetNoteByIdAsync(id);
+        if (storedNote is null)
+        {
+            return ServiceResult<Note>.Failure($"Note with id {id} doesnot exists.");
+        }
+
+        var updated = await _store.UpdateNoteAsync(note);
+        if (updated is null)
+        {
+            return ServiceResult<Note>.Failure("Somethng went wrong....");
+        }
+
+        return ServiceResult<Note>.Success(updated);
     }
 
     #endregion
