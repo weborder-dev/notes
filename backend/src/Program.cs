@@ -19,6 +19,9 @@ builder.Services.AddTransient<INotesStore, NATSNotesStore>();
 // builder.Services.AddNats(configureConnection: c => c = conn);
 builder.Services.AddNats(1, opc => NatsOpts.Default with
 {
+    Url = Environment.GetEnvironmentVariable("EVS_CONNECTION_URL")
+        ?? "nats://localhost:4222",
+    
     SerializerRegistry = NatsJsonSerializerRegistry.Default
 });
 
