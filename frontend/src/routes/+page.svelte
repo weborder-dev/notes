@@ -5,7 +5,7 @@
         </div>
         <ul>
             {#each notesList as single}
-                <li on:click={fetchRecord(single.id)}>{single.title}</li>
+                <li on:click={() => fetchRecord(single.id)}>{single.title}</li>
             {/each}
         </ul>
     </div>
@@ -19,12 +19,13 @@
 <script lang="ts">
     import { onMount } from "svelte";
 
-    const apiURL = "https://4f03-24-242-110-215.ngrok-free.app";
+    const apiURL = "http://notes.mivaro.net:8080";
     let titleRef: HTMLInputElement;
 
     let notesList: any = [];
     let noteTitle: string = "";
     let noteBody: string = "";
+    let selectedNote: string = "";
 
     onMount(() => {
         fetchRecords();
@@ -33,18 +34,24 @@
     const newNote = () => {
         noteTitle = "";
         noteBody = "";
+        selectedNote = "";
         titleRef.focus();
     }
 
     const saveNote = () => {
         console.log("Guarda la nota");
-        saveRecord();
+        if (selectedNote.length) {
+            updateRecord();
+        }
+        else {
+            saveRecord();
+        }
     }
 
     const fetchRecord = async (id: string) => {
         console.log(id);
         const response = await fetch(apiURL + '/notes/' + id, {
-            method: 'POST',
+            method: 'GET',
             headers: {
             'Content-Type': 'application/json'
             }
@@ -54,17 +61,15 @@
             throw new Error('Error en la solicitud');
         }
 
-        console.log(response);
-
         const data = await response.json();
-        console.log(data);
+        selectedNote = data.id;
         noteTitle = data.title;
         noteBody = data.body;
     };
 
     const fetchRecords = async () => {
         const response = await fetch(apiURL + '/notes/all', {
-            method: 'POST',
+            method: 'GET',
             headers: {
             'Content-Type': 'application/json'
             }
@@ -81,6 +86,26 @@
     const saveRecord = async () => {
         const response = await fetch(apiURL + '/notes', {
             method: 'POST',
+            headers: {
+            'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                "title": noteTitle,
+                "body": noteBody
+            })
+        });
+
+        if (!response.ok) {
+            throw new Error('Error en la solicitud');
+        }
+
+        const data = await response.json();
+        fetchRecords();
+    };
+
+    const updateRecord = async () => {
+        const response = await fetch(apiURL + '/notes/' + selectedNote, {
+            method: 'PATCH',
             headers: {
             'Content-Type': 'application/json'
             },
