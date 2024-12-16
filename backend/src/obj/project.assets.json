@@ -1159,7 +1159,7 @@
     "version": "1.0.0",
     "restore": {
       "projectUniqueName": "c:\\Users\\mzck5\\projects\\poc\\notes\\backend\\src\\NotesBackend.csproj",
-      "projectName": "NotesBackend",
+      "projectName": "notes-api",
       "projectPath": "c:\\Users\\mzck5\\projects\\poc\\notes\\backend\\src\\NotesBackend.csproj",
       "packagesPath": "C:\\Users\\mzck5\\.nuget\\packages\\",
       "outputPath": "c:\\Users\\mzck5\\projects\\poc\\notes\\backend\\src\\obj\\",

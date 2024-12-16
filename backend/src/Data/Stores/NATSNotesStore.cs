@@ -4,7 +4,7 @@ using NATS.Client.KeyValueStore;
 using NotesBackend.Core.Abstractions;
 using NotesBackend.Core.Models;
 
-namespace NotesBackend.Core.Stores;
+namespace NotesBackend.Core.Data.Stores;
 
 public class NATSNotesStore : INotesStore
 {

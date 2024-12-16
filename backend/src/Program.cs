@@ -7,9 +7,9 @@ using NATS.Client.Serializers.Json;
 using NotesBackend.Api.Requests;
 using NotesBackend.Api.Responses;
 using NotesBackend.Core.Abstractions;
+using NotesBackend.Core.Data.Stores;
 using NotesBackend.Core.Models;
 using NotesBackend.Core.Services;
-using NotesBackend.Core.Stores;
 
 var builder = WebApplication.CreateBuilder(args);
 

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\mzck5\\projects\\poc\\notes\\backend\\src\\NotesBackend.csproj": {}
+    "c:\\Users\\mzck5\\projects\\poc\\notes\\backend\\src\\NotesBackend.csproj": {}
   },
   "projects": {
-    "C:\\Users\\mzck5\\projects\\poc\\notes\\backend\\src\\NotesBackend.csproj": {
+    "c:\\Users\\mzck5\\projects\\poc\\notes\\backend\\src\\NotesBackend.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\mzck5\\projects\\poc\\notes\\backend\\src\\NotesBackend.csproj",
-        "projectName": "NotesBackend",
-        "projectPath": "C:\\Users\\mzck5\\projects\\poc\\notes\\backend\\src\\NotesBackend.csproj",
+        "projectUniqueName": "c:\\Users\\mzck5\\projects\\poc\\notes\\backend\\src\\NotesBackend.csproj",
+        "projectName": "notes-api",
+        "projectPath": "c:\\Users\\mzck5\\projects\\poc\\notes\\backend\\src\\NotesBackend.csproj",
         "packagesPath": "C:\\Users\\mzck5\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\mzck5\\projects\\poc\\notes\\backend\\src\\obj\\",
+        "outputPath": "c:\\Users\\mzck5\\projects\\poc\\notes\\backend\\src\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
