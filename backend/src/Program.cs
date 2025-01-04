@@ -1,6 +1,7 @@
 using System.Reflection;
 using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Memory;
 using NATS.Client.Core;
 using NATS.Client.Hosting;
 using NATS.Client.Serializers.Json;
@@ -10,6 +11,7 @@ using NotesBackend.Core.Abstractions;
 using NotesBackend.Core.Data.Stores;
 using NotesBackend.Core.Models;
 using NotesBackend.Core.Services;
+using NotesBackend.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,7 +23,7 @@ builder.Services.AddNats(1, opc => NatsOpts.Default with
 {
     Url = Environment.GetEnvironmentVariable("EVS_CONNECTION_URL")
         ?? "nats://localhost:4222",
-    
+
     SerializerRegistry = NatsJsonSerializerRegistry.Default
 });
 
@@ -32,6 +34,8 @@ builder.Services.AddCors(opc => opc.AddPolicy("ncors",
         .AllowAnyOrigin()
         .AllowAnyHeader()
         .AllowAnyMethod()));
+
+builder.Services.AddMemoryCache();
 
 var app = builder.Build();
 
@@ -64,7 +68,8 @@ app.MapPost("/notes", async (
     }
 
     return Results.BadRequest(res.Errors);
-});
+})
+.WithIdemPotentValidation<CreateNoteRequest>();
 
 app.MapGet("/notes/{id}", async (
     INotesService svr,
@@ -97,6 +102,7 @@ app.MapDelete("/notes/{id}", async (
     INotesService svr,
     [FromRoute] string id) =>
 {
+    id.AddPrefix("bitabit");
     await svr.DeleteNoteAsync(id);
     return Results.Ok();
 });
